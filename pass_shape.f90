@@ -72,7 +72,11 @@ contains
   ! as "an assumed-rank variable may only be used as an actual argument"
   ! which I interpret to mean if input_array is not used in an argument
   ! to a routine or function call, it's illegal
-  ! 
+  !
+  ! Intel states where/how assumed rank can be used:
+  !  As an actual argument that corresponds to a dummy argument that is assumed-rank
+  !  As the argument of the C_LOC function in the ISO_C_BINDING intrinsic module
+  !  As the first argument in a reference to an intrinsic inquiry function
   subroutine print_me_assumed_rank(input_array)
     use, intrinsic :: ISO_C_BINDING
     real(wp), target, contiguous, intent(in) :: input_array(..)  !Assumed-rank 
