@@ -28,6 +28,7 @@ program pass_shape
   call print_me_assumed_rank(a)
   call print_me_assumed_rank(b)
   call print_me_assumed_rank(c)
+  write(*,*)
 
   write(*,*) 'Pass assumed rank with rank 0, 1 and 2 arrays, to select rank:'
   call print_me_select_rank(a)
@@ -87,11 +88,16 @@ contains
     write(*,*) 'Shape of input array', shape(input_array)
     write(*,*) 'Shape of assigned array', shape(array)
     write(*,*) 'Contents of assigned array', array
+
+    deallocate(array)
+    nullify(array)
+    write(*,*) associated(array)
     
   end subroutine print_me_assumed_rank
 
   
-  !> F2015 and above. 
+  !> F2015 and above.
+  !> Note, this only compiles with GCC10 and above 
   subroutine print_me_select_rank(input_array)
     real(wp), intent(in) :: input_array(..)  ! Assumed-rank
     integer :: i
