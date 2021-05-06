@@ -89,10 +89,7 @@ contains
     write(*,*) 'Shape of assigned array', shape(array)
     write(*,*) 'Contents of assigned array', array
 
-    deallocate(array)
-    nullify(array)
-    write(*,*) associated(array)
-    
+    nullify(array)    
   end subroutine print_me_assumed_rank
 
   
