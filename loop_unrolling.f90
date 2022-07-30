@@ -57,8 +57,8 @@ program loop_unrolling
      do j = 1, m
         do k = 1, o
            cnt = cnt + 1
-           call unroll_composite_to_ijk(cnt, limits, outer, middle, inner)
-           write(*,*)  [k, j, i] - [outer, middle, inner]
+           call unroll_composite_to_ijk(cnt, limits, inner, middle, outer)
+           write(*,*)  [k, j, i] - [inner, middle, outer]
         enddo
      enddo
   enddo
@@ -210,7 +210,7 @@ contains
     integer, intent(in) :: cmp
     !> Limits of (k, j, i) = [Nk, Nj, Ni]
     integer, intent(in) :: limits(3)
-    !> Loop indices
+    !> Loop indices ordered: inner, middle, outer
     integer, intent(out) :: k, j, i
 
     integer :: ij, nk, nj, ni
