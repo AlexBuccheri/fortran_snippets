@@ -203,6 +203,6 @@ contains
 
     if (keep_A) A = tmp_A
     
-  end subroutine qr_decomposition
+  end subroutine qr_decomposition_with_pivot
 
 end program test_qr
