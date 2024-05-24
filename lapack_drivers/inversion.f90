@@ -79,15 +79,33 @@ contains
     enddo
     deallocate(S)
 
-    ! NOTE, I "think" I have the leading dimensions correct when requesting the OP on a transpose
-    ! As the test case is square, it may be masking an error
     ! Contract (V S^+) = VS
     allocate(VSi(n, n))
-    call dgemm('T', 'N', size(VT, 1), size(s_inv, 2), size(VT, 2), 1._dp, VT, size(VT, 2), s_inv, size(s_inv, 1), 0._dp, VSi, n)
+    call dgemm('T', 'N', &
+         size(VT, 2),    &  ! Rows of op(A). op(A) = V
+         size(s_inv, 2), &  ! Cols of op(B). op(B) = s_inv
+         size(VT, 1),    &  ! Cols of op(A)
+         1._dp,          &
+         VT,             &
+         size(VT, 1),    &  ! Rows of A
+         s_inv,          &  
+         size(s_inv, 1), &  ! Rows of B
+         0._dp,          &
+         VSi, n)            ! Rows of C
     deallocate(VT)
 
     ! Contract A_inv = (V S^+) U^T
-    call dgemm('N', 'T', size(VSi, 1), size(U, 2), size(VSi, 2), 1._dp, VSi, size(VSi, 1), U, size(U, 2), 0._dp, A_inv, m)
+    call dgemm('N', 'T', &
+         size(VSi, 1), &    ! Rows of op(A). op(A) = VSi
+         size(U, 1),   &    ! Cols of op(B). op(B) = U^T
+         size(VSi, 2), &    ! Cols of op(A)
+         1._dp,        &
+         VSi,          &
+         size(VSi, 1), &    ! Rows of A
+         U,            &
+         size(U, 1),   &    ! Rows of B
+         0._dp,        &
+         A_inv, m)          ! Rows of C
 
     deallocate(VSi)
     deallocate(U)
