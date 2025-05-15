@@ -1,5 +1,7 @@
 ! Like an array of derived type, fortran can define
 ! an array using an abstract interface
+! Note, this does not compile (even though I thought it did at one point)
+! More disgusting solution is: https://community.intel.com/t5/Intel-Fortran-Compiler/Static-array-of-procedure-pointers/td-p/964019
 
 program array_of_function_pointers
     abstract interface
